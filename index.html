@@ -20,10 +20,10 @@
             <div class="inputs">
                 <input type="text" id="title" placeholder="Title">
                 <div class="price">
-                    <input type="number" id="price" placeholder="Price">
-                    <input type="number" id="taxes" placeholder="Taxes">
-                    <input type="number" id="ads" placeholder="Ads">
-                    <input type="number" id="discount" placeholder="Discount">
+                    <input onKeyUp="getTotal()" type="number" id="price" placeholder="Price">
+                    <input onKeyUp="getTotal()" type="number" id="taxes" placeholder="Taxes">
+                    <input onKeyUp="getTotal()" type="number" id="ads" placeholder="Ads">
+                    <input onKeyUp="getTotal()" type="number" id="discount" placeholder="Discount">
                     <small id="total">0</small>
                 </div>
                 <input type="number" id="count" placeholder="Count">
@@ -109,6 +109,8 @@
             </div>
 
         </div>
+
+        <script src="main.js"></script>
 
     </body>
 
