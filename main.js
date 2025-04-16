@@ -16,6 +16,11 @@ function getTotal(){
     if (price.value != ''){
         let result = (+price.value + +taxes.value + +ads.value) - +discount.value;
         total.innerHTML = result;
+        total.style.background = '#040'
+    }
+    else{
+        total.innerHTML = '';
+        total.style.background = '#da4343';
     }
 }
 
@@ -24,6 +29,31 @@ function getTotal(){
 
 
 // create new product
+
+let data = [];
+
+submit.onclick = function () {
+    let item = {
+        title:  title.value,
+        price:  price.value,
+        taxes:  taxes.value,
+        ads:    ads.value,
+        discount: discount.value,
+        total:  total.innerHTML,
+        count:  count.value,
+        category: category.value
+    }
+    console.log(item)
+    data.push(item)
+}
+
+
+
+
+
+
+
+
 // save product in local storage
 // clear inputs
 // read
