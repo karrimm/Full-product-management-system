@@ -30,7 +30,13 @@ function getTotal(){
 
 // create new product
 
-let data = [];
+let data;
+
+if(localStorage.product != null) {
+    data = JSON.parse(localStorage.product)
+}else{
+    data = []
+}
 
 submit.onclick = function () {
     let item = {
@@ -43,8 +49,11 @@ submit.onclick = function () {
         count:  count.value,
         category: category.value
     }
-    console.log(item)
     data.push(item)
+
+    localStorage.setItem('product', JSON.stringify(data))
+
+    console.log(data)
 }
 
 
