@@ -36,38 +36,77 @@ if(localStorage.product != null) {
     data = JSON.parse(localStorage.product)
 }else{
     data = []
-}
+   
+    submit.onclick = function () {
+        let item = {
+            title:  title.value,
+            price:  price.value,
+            taxes:  taxes.value,
+            ads:    ads.value,
+            discount: discount.value,
+            total:  total.innerHTML,
+            count:  count.value,
+            category: category.value
+        }
+        data.push(item)
 
-submit.onclick = function () {
-    let item = {
-        title:  title.value,
-        price:  price.value,
-        taxes:  taxes.value,
-        ads:    ads.value,
-        discount: discount.value,
-        total:  total.innerHTML,
-        count:  count.value,
-        category: category.value
+        // save product in local storage
+        localStorage.setItem('product', JSON.stringify(data))
+
+        clearInputs()
+        showData()
     }
-    data.push(item)
 
-    localStorage.setItem('product', JSON.stringify(data))
+} 
 
-    console.log(data)
+// clear inputs
+
+function clearInputs() {
+    title.value = '';
+    price.value = '';
+    taxes.value = '';
+    ads.value = '';
+    discount.value = '';
+    total.innerHTML = '';
+    count.value = '';
+    category.value = '';
 }
 
-
-
-
-
-
-
-
-// save product in local storage
-// clear inputs
 // read
-// count
+
+function showData() {
+    let table = '';
+    for(let i = 0; i < data.length; i++) {
+        table += `
+        <tr>
+            <td>${i}</td>
+            <td>${data[i].title}</td>
+            <td>${data[i].price}</td>
+            <td>${data[i].taxes}</td>
+            <td>${data[i].ads}</td>
+            <td>${data[i].discount}</td>  
+            <td>${data[i].total}</td>
+            <td>${data[i].category}</td>
+            <td><button id="update">update</button></td>
+            <td><button onclick="deleteData(${i})" id="delete">delete</button></td>
+        </tr>
+        `;
+    }
+    
+    document.getElementById('tbody').innerHTML = table;
+}
+
+showData()
+
 // delete
+
+function deleteData(i) {
+    data.splice(i, 1);
+    localStorage.product = JSON.stringify(data)
+    showData()
+}
+
+// count
 // update
 // search
 // clean data
