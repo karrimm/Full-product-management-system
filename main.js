@@ -45,11 +45,19 @@ submit.onclick = function () {
         count:  count.value,
         category: category.value
     }
-    data.push(item)
+
+    // Count 
+    if (item.count > 1) {
+        for (let i=0; i<item.count; i++) {
+            data.push(item);
+        }
+    }else {
+        data.push(item)
+    }
+    
 
     // save product in local storage
     localStorage.setItem('product', JSON.stringify(data))
-
     clearInputs()
     showData()
 }
@@ -94,7 +102,7 @@ function showData() {
     let btnDeleteAll = document.getElementById('deleteAll'); 
 
     if (data.length > 0) {
-        btnDeleteAll.innerHTML = `<button onclick="deleteAll()">Delete All</button>`
+        btnDeleteAll.innerHTML = `<button onclick="deleteAll()">Delete All (${data.length})</button>`
     }else {
         btnDeleteAll.innerHTML = '';
     }
@@ -118,7 +126,7 @@ function deleteAll() {
     showData();
 }
 
-// count
+
 // update
 // search
 // clean data
