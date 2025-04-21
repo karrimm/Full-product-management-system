@@ -91,7 +91,7 @@ function showData() {
             <td>${data[i].discount}</td>  
             <td>${data[i].total}</td>
             <td>${data[i].category}</td>
-            <td><button id="update">update</button></td>
+            <td><button onclick="updateData(${i})" id="update">update</button></td>
             <td><button onclick="deleteData(${i})" id="delete">delete</button></td>
         </tr>
         `;
@@ -128,5 +128,9 @@ function deleteAll() {
 
 
 // update
+
+function updateData(i) {
+    console.log(i);
+}
 // search
 // clean data
