@@ -24,10 +24,6 @@ function getTotal(){
     }
 }
 
-
-
-
-
 // create new product
 
 let data;
@@ -35,29 +31,29 @@ let data;
 if(localStorage.product != null) {
     data = JSON.parse(localStorage.product)
 }else{
-    data = []
-   
-    submit.onclick = function () {
-        let item = {
-            title:  title.value,
-            price:  price.value,
-            taxes:  taxes.value,
-            ads:    ads.value,
-            discount: discount.value,
-            total:  total.innerHTML,
-            count:  count.value,
-            category: category.value
-        }
-        data.push(item)
+    data = []  
+}
 
-        // save product in local storage
-        localStorage.setItem('product', JSON.stringify(data))
-
-        clearInputs()
-        showData()
+submit.onclick = function () {
+    let item = {
+        title:  title.value,
+        price:  price.value,
+        taxes:  taxes.value,
+        ads:    ads.value,
+        discount: discount.value,
+        total:  total.innerHTML,
+        count:  count.value,
+        category: category.value
     }
+    data.push(item)
 
-} 
+    // save product in local storage
+    localStorage.setItem('product', JSON.stringify(data))
+
+    clearInputs()
+    showData()
+}
+
 
 // clear inputs
 
@@ -94,16 +90,32 @@ function showData() {
     }
     
     document.getElementById('tbody').innerHTML = table;
+
+    let btnDeleteAll = document.getElementById('deleteAll'); 
+
+    if (data.length > 0) {
+        btnDeleteAll.innerHTML = `<button onclick="deleteAll()">Delete All</button>`
+    }else {
+        btnDeleteAll.innerHTML = '';
+    }
 }
 
 showData()
 
-// delete
+// Delete one element
 
 function deleteData(i) {
     data.splice(i, 1);
     localStorage.product = JSON.stringify(data)
     showData()
+}
+
+// Delete All
+
+function deleteAll() {
+    localStorage.clear();
+    data.splice(0);
+    showData();
 }
 
 // count

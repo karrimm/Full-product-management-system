@@ -41,6 +41,10 @@ input:focus{
     width: 20%;
 }
 
+#deleteAll{
+    margin: 15px 0;
+}
+
 #total{
     background-color: #da4343;
     padding: 8px;
