@@ -10,6 +10,9 @@ let submit = document.getElementById('submit')
 
 // console.log(title, price, taxes, ads, discount, total, count, category, submit)
 
+let temp;
+let myVar = "create";
+
 // get total price
 
 function getTotal(){
@@ -36,29 +39,46 @@ if(localStorage.product != null) {
 
 submit.onclick = function () {
     let item = {
-        title:  title.value,
+        title:  title.value.toLowerCase(),
         price:  price.value,
         taxes:  taxes.value,
         ads:    ads.value,
         discount: discount.value,
         total:  total.innerHTML,
         count:  count.value,
-        category: category.value
+        category: category.value.toLowerCase()
     }
 
     // Count 
-    if (item.count > 1) {
-        for (let i=0; i<item.count; i++) {
-            data.push(item);
+    if (title.value != '' 
+        && price.value != '' 
+        && category.value != '' 
+        && item.count < 100) {
+        if(myVar === 'create'){
+            if (item.count > 1) {
+            for (let i=0; i<item.count; i++) {
+                data.push(item);
+            }
+            }else {
+                data.push(item)
+            }
+        }else{
+            data[tmp] = item;
+            submit.innerHTML = 'Create';
+            count.style.display = 'block';
+            myVar = 'create';
         }
-    }else {
-        data.push(item)
+        clearInputs()
     }
+    else{
+        alert('Please enter valid data, and count should be less than 100')
+        
+    }
+    
     
 
     // save product in local storage
     localStorage.setItem('product', JSON.stringify(data))
-    clearInputs()
     showData()
 }
 
@@ -79,11 +99,12 @@ function clearInputs() {
 // read
 
 function showData() {
+    getTotal()
     let table = '';
     for(let i = 0; i < data.length; i++) {
         table += `
         <tr>
-            <td>${i}</td>
+            <td>${i+1}</td>
             <td>${data[i].title}</td>
             <td>${data[i].price}</td>
             <td>${data[i].taxes}</td>
@@ -131,6 +152,88 @@ function deleteAll() {
 
 function updateData(i) {
     console.log(i);
+    title.value = data[i].title;
+    price.value = data[i].price;
+    taxes.value = data[i].taxes;
+    ads.value = data[i].ads;
+    discount.value = data[i].discount;
+    getTotal();
+    category.value = data[i].category;
+    count.style.display = 'none';   
+    submit.innerHTML = 'Update';
+    myVar = 'update';
+    tmp = i;
+    scroll({
+        top: 0,
+        behavior: "smooth"
+    })
 }
+
+
 // search
+
+let searchMood = "Title";
+
+function getSearchMood(id) {
+    let search = document.getElementById('search')
+    
+    if (id === 'searchTitle') {
+        searchMood = 'Title';
+    }else{
+        searchMood = 'Category';
+    }
+    
+    search.placeholder = 'Search By ' + searchMood;
+    search.focus()
+    search.value = '';
+    showData();
+}
+
+
+
+function searchData(value) {
+    // console.log(value);
+    getTotal();
+    let table = '';
+    for(let i = 0; i < data.length; i++) {
+        if (searchMood === 'Title') {
+                if (data[i].title.includes(value.toLowerCase())){
+                    table += `
+                    <tr>
+                        <td>${i+1}</td>
+                        <td>${data[i].title}</td>
+                        <td>${data[i].price}</td>
+                        <td>${data[i].taxes}</td>
+                        <td>${data[i].ads}</td>
+                        <td>${data[i].discount}</td>  
+                        <td>${data[i].total}</td>
+                        <td>${data[i].category}</td>
+                        <td><button onclick="updateData(${i})" id="update">update</button></td>
+                        <td><button onclick="deleteData(${i})" id="delete">delete</button></td>
+                    </tr>`;
+                }
+            }
+        else {
+            if (data[i].category.includes(value.toLowerCase())){
+                table += `
+                <tr>
+                    <td>${i+1}</td>
+                    <td>${data[i].title}</td>
+                    <td>${data[i].price}</td>
+                    <td>${data[i].taxes}</td>
+                    <td>${data[i].ads}</td>
+                    <td>${data[i].discount}</td>  
+                    <td>${data[i].total}</td>
+                    <td>${data[i].category}</td>
+                    <td><button onclick="updateData(${i})" id="update">update</button></td>
+                    <td><button onclick="deleteData(${i})" id="delete">delete</button></td>
+                </tr>`;
+            }
+        }
+    }
+
+    document.getElementById('tbody').innerHTML = table;
+}
+
+
 // clean data
