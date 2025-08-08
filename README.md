@@ -8,3 +8,6 @@
 7. Permanently save products to local storage
 8. Calculates product tax and advertising costs and determines the final price
 9. Data will only be added if it is correct
+
+
+Project Overview : https://full-product-management-system.onrender.com
